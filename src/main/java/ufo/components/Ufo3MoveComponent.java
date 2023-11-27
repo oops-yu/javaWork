@@ -18,6 +18,7 @@ public class Ufo3MoveComponent extends Component {
     private int moveDirectionY;     // 同上
     @Override
     public void onUpdate(double tpf){
+
         entity.translate(tpf * moveSpeed * moveDirectionX,tpf * moveSpeed * moveDirectionY);
         //对活动范围进行限定
         Point2D pos = entity.getPosition();
@@ -34,6 +35,7 @@ public class Ufo3MoveComponent extends Component {
            
             moveDirectionY = 1;
         }
+
     }
     @Override
     public void onAdded(){
@@ -65,6 +67,8 @@ public class Ufo3MoveComponent extends Component {
     }
     @Override
     public void onRemoved(){
+
         autoMove.expire();
+        
     }
 }

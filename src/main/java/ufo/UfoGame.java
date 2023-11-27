@@ -32,6 +32,7 @@ public class UfoGame extends GameApplication {
 
     @Override
     protected void initSettings(GameSettings settings) {
+
         settings.setWidth(300);
         settings.setHeight(300);
         settings.setTitle("UFO");
@@ -40,7 +41,9 @@ public class UfoGame extends GameApplication {
 
     @Override
     protected void initInput() {
+
         getInput().addAction(new UserAction("Click") {
+
             @Override
             protected void onActionEnd() {
 
@@ -49,21 +52,20 @@ public class UfoGame extends GameApplication {
                 EntityType type = UFO1;
                 for (Entity e : entities) {
                     if (e.isType(UFO1) || e.isType(UFO2) || e.isType(UFO3)) {
-                        //进一步地，如果鼠标点击的位置在UFO上则退出循环，代表已找到鼠标点击的UFO
+                        // 进一步地，如果鼠标点击的位置在UFO上则退出循环，代表已找到鼠标点击的UFO
                         Point2D mousePos = getInput().getMousePositionWorld();
                         Point2D targetPos = e.getPosition();
-                        if(
-                        mousePos.getX() > targetPos.getX() 
-                        && mousePos.getX() < targetPos.getX() + 30
-                        && mousePos.getY() > targetPos.getY()
-                        && mousePos.getY() < targetPos.getY() + 30
-                        ){
+                        if (mousePos.getX() > targetPos.getX()
+                                && mousePos.getX() < targetPos.getX() + 30
+                                && mousePos.getY() > targetPos.getY()
+                                && mousePos.getY() < targetPos.getY() + 30) {
                             tmpEntity = e;
                             break;
                         }
-                        
+
                     }
                 }
+
                 if (tmpEntity != null) {
                     type = (EntityType) tmpEntity.getType();
                     tmpEntity.removeFromWorld();
@@ -96,6 +98,7 @@ public class UfoGame extends GameApplication {
 
     @Override
     protected void initGameVars(Map<String, Object> vars) {
+
         vars.put("score", 0);
         vars.put("shotsLeft", 30);
         vars.put("citiesLeft", 10);
@@ -112,6 +115,7 @@ public class UfoGame extends GameApplication {
 
     @Override
     protected void initGame() {
+
         getGameWorld().addEntityFactory(new UfoEntityFactory());
         initBackground();
         initCities();
@@ -121,6 +125,7 @@ public class UfoGame extends GameApplication {
             inc("ufoesLeft", -1);
             inc("aliveUfoesLeft", +1);
         }, Duration.seconds(3 * 2));
+
     }
 
     @Override
@@ -130,28 +135,28 @@ public class UfoGame extends GameApplication {
 
             bullet.removeFromWorld();
 
-            if (geti("shieldsLeft") > 0) { //护盾值大于0时，扣除护盾
+            if (geti("shieldsLeft") > 0) { // 护盾值大于0时，扣除护盾
 
                 inc("shieldsLeft", -1);
 
-            } else {                       //否则扣除血量
+            } else { // 否则扣除血量
                 String targetCityHealth = "city1Health";
-                if (city.getPosition().getX() > getAppWidth() / 2) targetCityHealth = "city2Health";//在1/2屏幕右边的city为第二个城市
+                if (city.getPosition().getX() > getAppWidth() / 2)
+                    targetCityHealth = "city2Health";// 在1/2屏幕右边的city为第二个城市
 
-                //扣除血量
+                // 扣除血量
                 inc(targetCityHealth, -1);
                 inc("citiesLeft", -1);
 
-                //当某个city的血量见底时，替换为城市被摧毁的纹理
-                if(geti(targetCityHealth) == 0){
-                    getGameWorld().spawn("CITYBURN",city.getX(),city.getY());
+                // 当某个city的血量见底时，替换为城市被摧毁的纹理
+                if (geti(targetCityHealth) == 0) {
+                    getGameWorld().spawn("CITYBURN", city.getX(), city.getY());
                     city.removeFromWorld();
                 }
             }
-            
-            
+
         });
-        //子弹碰到地板则清除子弹
+        // 子弹碰到地板则清除子弹
         onCollisionBegin(BULLET, GROUND, (bullet, ground) -> {
             bullet.removeFromWorld();
         });
@@ -231,7 +236,8 @@ public class UfoGame extends GameApplication {
 
     @Override
     protected void onUpdate(double tpf) {
-        if (geti("shotsLeft") == 0 && geti("aliveUfoesLeft")+geti("ufoesLeft") > 0 || geti("citiesLeft") == 0) {
+
+        if (geti("shotsLeft") == 0 && geti("aliveUfoesLeft") + geti("ufoesLeft") > 0 || geti("citiesLeft") == 0) {
             showGameOver();
         }
 
@@ -252,7 +258,7 @@ public class UfoGame extends GameApplication {
                 .view(rect)
                 .with("rect", rect)
                 .buildAndAttach();
-        //绿色地板
+        // 绿色地板
         Entity bg_bottom = entityBuilder()
                 .type(GROUND)
                 .at(0, getAppHeight() * 9 / 10)
@@ -275,13 +281,17 @@ public class UfoGame extends GameApplication {
     }
 
     private void showGameOver() {
+
         String msg = String.format("保卫失败!score:%d", geti("score"));
         showMessage(msg, getGameController()::exit);
+
     }
 
     private void showGoodGame() {
+
         String msg = String.format("真厉害!score:%d", geti("score"));
         showMessage(msg, getGameController()::exit);
+        
     }
 
     public static void main(String[] args) {

@@ -16,9 +16,11 @@ public class Ufo3ShootComponent extends Component {
     private TimerAction autoAttack;
     @Override
     public void onAdded(){
+
         autoAttack = getGameTimer().runAtInterval(() -> {
             this.attack();
         },Duration.seconds(attackInterval));
+        
     }
     @Override
     public void onRemoved(){
@@ -28,5 +30,6 @@ public class Ufo3ShootComponent extends Component {
 
         Point2D pos = entity.getPosition();
         getGameWorld().spawn("BULLET",pos.getX()+15,pos.getY()+30);
+
     }
 }

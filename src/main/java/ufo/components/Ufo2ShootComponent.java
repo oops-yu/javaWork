@@ -12,21 +12,29 @@ import com.almasb.fxgl.core.math.FXGLMath;
 import com.almasb.fxgl.time.*;
 
 public class Ufo2ShootComponent extends Component {
-    private double attackInterval = 4.0; //单位 num/s
+    private double attackInterval = 4.0; // 单位 num/s
     private TimerAction autoAttack;
+
     @Override
-    public void onAdded(){
+    public void onAdded() {
+
         autoAttack = getGameTimer().runAtInterval(() -> {
             this.attack();
-        },Duration.seconds(attackInterval));
+        }, Duration.seconds(attackInterval));
+
     }
+
     @Override
-    public void onRemoved(){
+    public void onRemoved() {
+
         autoAttack.expire();
+
     }
-    public void  attack() {
+
+    public void attack() {
 
         Point2D pos = entity.getPosition();
-        getGameWorld().spawn("BULLET",pos.getX()+15,pos.getY()+30);
+        getGameWorld().spawn("BULLET", pos.getX() + 15, pos.getY() + 30);
+        
     }
 }
