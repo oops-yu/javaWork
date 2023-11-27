@@ -1,0 +1,28 @@
+plugins {
+    id 'java'
+    id 'org.openjfx.javafxplugin' version '0.1.0'
+    id 'application'
+}
+
+javafx {
+    modules = [ 'javafx.base', 'javafx.graphics','javafx.controls', 'javafx.fxml' ,'javafx.media']
+}
+
+run {
+    mainClass = 'ufo.UfoGame'
+}
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'com.github.almasb:fxgl:17.3'
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
