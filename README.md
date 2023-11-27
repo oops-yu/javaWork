@@ -2,7 +2,7 @@
 ### tools versions
     java version 21
     gradle version 8.4
-### dependences
+### dependencies
     详情请看build.gradle文件
 ### 运行命令
     cd /path/to/thisdir
